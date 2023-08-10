@@ -1,2 +1,5 @@
-# SoftwareMeasurement
-Software Measurement and Experimentation
+# Medição e Experimentação de Software
+
+### Autores:
+Humberto Vieira \
+Pedro Henrique
