@@ -1,5 +1,11 @@
 # Medição e Experimentação de Software
 
+## OBS:
+Criar um arquivo na raiz do projeto com nome ``lab.env`` e incluir o token da API do GitHub no formato abaixo:
+```text
+TOKEN=<Seu Token Aqui>
+```
+
 
 ## Lab 1 Sprint 01 - 16/08 - 19h
 - [ ] Consulta graphql para 100 repositórios (com todos os dados/métricas necessários para responder as RQs)
