@@ -1,3 +1,5 @@
+import http
+
 from settings import env_config
 from string import Template
 import requests
@@ -7,7 +9,7 @@ HEADERS = {"Authorization": "Bearer " + env_config('TOKEN')}
 
 QUERY_TOP_REPOS = """
 {
-  search(first: 100, type: REPOSITORY, query: "stars:>=10000") {
+  search(first: 101, type: REPOSITORY, query: "stars:>=10000") {
     edges {
       node {
         ... on Repository {
@@ -65,8 +67,7 @@ def top_repos_query():
 def repo_details_query(search_id):
     query = QUERY_REPO_DETAILS.substitute(search_id=search_id)
     request = requests.post(GITHUB_API_URL, json={'query': query}, headers=HEADERS)
-    return request.json()
-    # if request.status_code == statusCode:
-    #     return request.json()
-    # else:
-    #     raise Exception(f"Unexpected status code returned: {request.status_code}")
+    if request.status_code == http.HTTPStatus.OK:
+        return request.json()
+    else:
+        raise Exception(f"Unexpected status code returned: {request.status_code}. With response {request.json()}")
