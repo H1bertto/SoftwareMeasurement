@@ -1,4 +1,5 @@
 from settings import env_config
+from string import Template
 import requests
 
 GITHUB_API_URL = "https://api.github.com/graphql"
@@ -25,9 +26,9 @@ QUERY_TOP_REPOS = """
 }
 """
 
-QUERY_REPO = """
+QUERY_REPO_DETAILS = Template("""
 {
-  search(first: 1, type: REPOSITORY, query: "repo:vuejs/vue") {
+  search(first: 1, type: REPOSITORY, query: "repo:$search_id") {
     edges {
       node {
         ... on Repository {
@@ -53,11 +54,17 @@ QUERY_REPO = """
     }
   }
 }
-"""
+""")
 
 
-def graphql_query():
+def top_repos_query():
     request = requests.post(GITHUB_API_URL, json={'query': QUERY_TOP_REPOS}, headers=HEADERS)
+    return request.json()
+
+
+def repo_details_query(search_id):
+    query = QUERY_REPO_DETAILS.substitute(search_id=search_id)
+    request = requests.post(GITHUB_API_URL, json={'query': query}, headers=HEADERS)
     return request.json()
     # if request.status_code == statusCode:
     #     return request.json()
