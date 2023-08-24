@@ -9,7 +9,7 @@ HEADERS = {"Authorization": "Bearer " + env_config('TOKEN')}
 
 QUERY_TOP_REPOS = """
 {
-  search(first: 101, type: REPOSITORY, query: "stars:>=10000") {
+  search(first: 100, type: REPOSITORY, query: "stars:>=10000") {
     edges {
       node {
         ... on Repository {
@@ -18,7 +18,7 @@ QUERY_TOP_REPOS = """
             login
           }
           id
-          name
+          nameWithOwner
           url
           stargazerCount
         }
@@ -45,10 +45,10 @@ QUERY_REPO_DETAILS = Template("""
           primaryLanguage {
             name
           }
-          all_issues: issues(first: 1) {
+          all_issues: issues {
             totalCount
           }
-          close_issues: issues(first: 1, states: CLOSED) {
+          close_issues: issues(states: [CLOSED]) {
             totalCount
           }
         }
@@ -66,7 +66,7 @@ def top_repos_query():
 
 def repo_details_query(search_id):
     query = QUERY_REPO_DETAILS.substitute(search_id=search_id)
-    request = requests.post(GITHUB_API_URL, json={'query': query}, headers=HEADERS)
+    request = requests.post(GITHUB_API_URL, json={'query': query}, headers=HEADERS, timeout=None)
     if request.status_code == http.HTTPStatus.OK:
         return request.json()
     else:
