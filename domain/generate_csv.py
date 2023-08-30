@@ -10,9 +10,12 @@ def generate_repository_csv():
     repo_csv.write_header()
 
     crawler = RepositoryCrawlerService()
-    repos = crawler.crawl()
 
-    for repo_json in repos:
-        repo_model = Repository(repo_json)
-        repo_csv.write_row(repo_model)
+    result = crawler.crawl()
+    for page in range(1, 10):
+        for repo_json in result["repos"]:
+            repo_model = Repository(repo_json)
+            repo_csv.write_row(repo_model)
+        result = crawler.crawl(result["cursor"])
+
     repo_csv.reset_internal()
