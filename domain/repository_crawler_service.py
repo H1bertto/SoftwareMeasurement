@@ -6,11 +6,12 @@ class RepositoryCrawlerService:
     def __init__(self):
         self.github_api = GithubApi()
 
-    def crawl(self):
-        data_json = self.github_api.top_repos_query()
+    def crawl(self, cursor=""):
+        data_json = self.github_api.top_repos_query(cursor)
         if 'error' in data_json:
             raise Exception(f"Unexpected error: {data_json}")
         data = data_json['data']['search']['edges']
+        cursor = data_json['data']['search']['pageInfo']['endCursor']
         repos = []
 
         count = 0
@@ -25,4 +26,4 @@ class RepositoryCrawlerService:
             repos.append(repo)
             count += 1
 
-        return repos
+        return {"repos": repos, "cursor": cursor}

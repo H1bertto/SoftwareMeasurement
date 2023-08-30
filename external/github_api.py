@@ -10,9 +10,13 @@ class GithubApi:
     URL = "https://api.github.com/graphql"
     HEADERS = {"Authorization": "Bearer " + env_config('TOKEN')}
 
-    QUERY_TOP_REPOS = """
+    QUERY_TOP_REPOS = Template("""
     {
-      search(first: 100, type: REPOSITORY, query: "stars:>=10000") {
+      search(first: 1, type: REPOSITORY, query: "stars:>=10000" $pagination) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
         edges {
           node {
             ... on Repository {
@@ -25,7 +29,7 @@ class GithubApi:
         }
       }
     }
-    """
+    """)
 
     QUERY_REPO_DETAILS = Template("""
     {
@@ -57,8 +61,13 @@ class GithubApi:
     }
     """)
 
-    def top_repos_query(self):
-        request = requests.post(self.URL, json={'query': self.QUERY_TOP_REPOS}, headers=self.HEADERS)
+    def top_repos_query(self, cursor=""):
+        pagination = cursor
+        if cursor is not "":
+            pagination = Template(""", after: "$cursor" """).substitute(cursor=cursor)
+
+        query = self.QUERY_TOP_REPOS.substitute(pagination=pagination)
+        request = requests.post(self.URL, json={'query': query}, headers=self.HEADERS, timeout=60)
         if request.status_code == http.HTTPStatus.OK:
             try:
                 response_json = request.json()
@@ -73,7 +82,7 @@ class GithubApi:
 
     def repo_details_query(self, search_id):
         query = self.QUERY_REPO_DETAILS.substitute(search_id=search_id)
-        request = requests.post(self.URL, json={'query': query}, headers=self.HEADERS, timeout=None)
+        request = requests.post(self.URL, json={'query': query}, headers=self.HEADERS, timeout=60)
         if request.status_code == http.HTTPStatus.OK:
             try:
                 response_json = request.json()
