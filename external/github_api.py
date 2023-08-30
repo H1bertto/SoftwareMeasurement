@@ -1,4 +1,5 @@
 import http
+import json
 
 from settings import env_config
 from string import Template
@@ -59,7 +60,14 @@ class GithubApi:
     def top_repos_query(self):
         request = requests.post(self.URL, json={'query': self.QUERY_TOP_REPOS}, headers=self.HEADERS)
         if request.status_code == http.HTTPStatus.OK:
-            return request.json()
+            try:
+                response_json = request.json()
+            except json.JSONDecodeError:
+                response_json = {
+                    'error': 'JSON Error',
+                    'info': request.text
+                }
+            return response_json
         else:
             raise Exception(f"Unexpected status code returned: {request.status_code}. With response {request.json()}")
 
@@ -67,6 +75,13 @@ class GithubApi:
         query = self.QUERY_REPO_DETAILS.substitute(search_id=search_id)
         request = requests.post(self.URL, json={'query': query}, headers=self.HEADERS, timeout=None)
         if request.status_code == http.HTTPStatus.OK:
-            return request.json()
+            try:
+                response_json = request.json()
+            except json.JSONDecodeError:
+                response_json = {
+                    'error': 'JSON Error',
+                    'info': request.text
+                }
+            return response_json
         else:
             raise Exception(f"Unexpected status code returned: {request.status_code}. With response {request.json()}")

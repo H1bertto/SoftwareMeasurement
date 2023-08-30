@@ -32,7 +32,7 @@ class RepositoryCsvService:
             self.reset_internal()
 
         self.mode = self.WRITING_MODE
-        self.file = open(self.FILE_NAME, "w", newline='')
+        self.file = open(self.FILE_NAME, "w", newline='', encoding='utf-8')
         self.writer = csv.writer(self.file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     def write_header(self):
