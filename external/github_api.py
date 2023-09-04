@@ -63,7 +63,7 @@ class GithubApi:
 
     def top_repos_query(self, cursor=""):
         pagination = cursor
-        if cursor is not "":
+        if cursor != "":
             pagination = Template(""", after: "$cursor" """).substitute(cursor=cursor)
 
         query = self.QUERY_TOP_REPOS.substitute(pagination=pagination)
