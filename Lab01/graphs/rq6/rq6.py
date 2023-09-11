@@ -3,7 +3,7 @@ from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    df = pd.read_csv('../../repository.csv')
+    df = pd.read_csv('../../../repository.csv')
 
     print("********** max ********** \n")
     print(df.iloc[df['issues_rate'].idxmax()])
@@ -23,6 +23,9 @@ if __name__ == '__main__':
     correlation, p_value = pearsonr(df['issues_rate'], df['stargazer_count'])
     print("correlation: " + str(correlation))
     print("p-value: " + str(p_value))
+
+
+
 
     df.plot(x='issues_rate', y='stargazer_count', kind='scatter')
     plt.show()

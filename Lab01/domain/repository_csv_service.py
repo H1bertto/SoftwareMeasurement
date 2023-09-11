@@ -1,4 +1,4 @@
-from domain.repository_model import Repository
+from Lab01.domain.repository_model import Repository
 import csv
 import os
 

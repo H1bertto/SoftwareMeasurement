@@ -1,6 +1,6 @@
-from domain.repository_crawler_service import RepositoryCrawlerService
-from domain.repository_model import Repository
-from domain.repository_csv_service import RepositoryCsvService
+from Lab02.domain.repository_crawler_service import RepositoryCrawlerService
+from Lab02.domain.repository_model import Repository
+from Lab02.domain.repository_csv_service import RepositoryCsvService
 
 
 def generate_repository_csv():

@@ -1,4 +1,4 @@
-from external.github_api import GithubApi
+from Lab02.external.github_api import GithubApi
 
 
 class RepositoryCrawlerService:

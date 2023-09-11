@@ -3,7 +3,7 @@ from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    df = pd.read_csv('../../repository.csv')
+    df = pd.read_csv('../../../repository.csv')
 
     print("********** max ********** \n")
     print(df.iloc[df['releases'].idxmax()])
