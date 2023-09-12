@@ -1,4 +1,4 @@
-from domain.repository_model import Repository
+from Lab01.domain.repository_model import Repository
 import csv
 import os
 
@@ -41,3 +41,17 @@ class RepositoryCsvService:
     def write_row(self, repository: Repository):
         self.writer.writerow(repository.get_string_row())
         self.file.flush()
+
+    def start_reader(self):
+        if self.mode is not None:
+            self.reset_internal()
+
+        self.mode = self.READING_MODE
+        self.file = open(self.FILE_NAME, "r", newline='', encoding='utf-8')
+        self.reader = csv.DictReader(self.file)
+
+    def read_all(self):
+        repositories = []
+        for row in self.reader:
+            repositories.append(Repository(repo_row=row))
+        return repositories

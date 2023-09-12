@@ -1,6 +1,6 @@
-from domain.repository_crawler_service import RepositoryCrawlerService
-from domain.repository_model import Repository
-from domain.repository_csv_service import RepositoryCsvService
+from Lab02.domain.repository_crawler_service import RepositoryCrawlerService
+from Lab02.domain.repository_model import Repository
+from Lab02.domain.repository_csv_service import RepositoryCsvService
 
 
 def generate_repository_csv():
@@ -12,10 +12,16 @@ def generate_repository_csv():
     crawler = RepositoryCrawlerService()
 
     result = crawler.crawl()
-    for page in range(1, 10):
+    for page in range(1, 11):
         for repo_json in result["repos"]:
             repo_model = Repository(repo_json)
             repo_csv.write_row(repo_model)
         result = crawler.crawl(result["cursor"])
 
     repo_csv.reset_internal()
+
+
+def read_repository_csv():
+    repo_csv = RepositoryCsvService()
+    repo_csv.start_reader()
+    return repo_csv.read_all()
