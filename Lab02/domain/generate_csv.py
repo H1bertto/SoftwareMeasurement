@@ -21,7 +21,7 @@ def generate_repository_csv():
     repo_csv.reset_internal()
 
 
-def read_repository_csv():
+def read_repository_csv(skip_rows=None):
     repo_csv = RepositoryCsvService()
-    repo_csv.start_reader()
+    repo_csv.start_reader(skip_rows)
     return repo_csv.read_all()

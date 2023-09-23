@@ -1,4 +1,6 @@
 from Lab02.domain.repository_model import Repository
+from settings import BASE_DIR
+import pandas as pd
 import csv
 import os
 
@@ -42,16 +44,19 @@ class RepositoryCsvService:
         self.writer.writerow(repository.get_string_row())
         self.file.flush()
 
-    def start_reader(self):
+    def start_reader(self, skip_rows=None):
         if self.mode is not None:
             self.reset_internal()
 
         self.mode = self.READING_MODE
-        self.file = open(self.FILE_NAME, "r", newline='', encoding='utf-8')
-        self.reader = csv.DictReader(self.file)
+        file_path = f'{BASE_DIR}/Lab02/{self.FILE_NAME}'
+        self.file = pd.read_csv(file_path, encoding='utf-8', skiprows=skip_rows,)
+        # self.file = open(file_path, "r", newline='', encoding='utf-8')
+        # self.reader = csv.DictReader(self.file)
+        self.reader = self.file.to_dict(orient='records')
 
     def read_all(self):
         repositories = []
         for row in self.reader:
-            repositories.append(Repository(repo_row=row))
+            repositories.append(Repository(repo_row=row, line=self.reader.index(row)+1))
         return repositories

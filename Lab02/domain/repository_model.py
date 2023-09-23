@@ -12,7 +12,7 @@ class Repository:
         "releases",
     ]
 
-    def __init__(self, repo_json=None, repo_row=None):
+    def __init__(self, repo_json=None, repo_row=None, line=None):
         if repo_json is not None:
             self.id = repo_json["id"]
             self.name_with_owner = repo_json["nameWithOwner"]
@@ -32,6 +32,7 @@ class Repository:
             self.created_at = repo_row[self.ROW_HEADER[3]]
             self.stargazer_count = repo_row[self.ROW_HEADER[4]]
             self.releases = repo_row[self.ROW_HEADER[5]]
+            self.line = line
 
     def get_string_row(self):
         return [
