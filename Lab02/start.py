@@ -2,8 +2,8 @@ from Lab02.domain.generate_csv import generate_repository_csv, read_repository_c
 from git import Repo
 
 
-if __name__ == '__main__':
-    # generate_repository_csv()
+def lab2_start():
+    generate_repository_csv()
     repos = read_repository_csv()
 
     for repo in repos:

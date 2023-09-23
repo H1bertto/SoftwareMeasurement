@@ -1,9 +1,8 @@
-import http
-import json
-
-from Lab02.settings import env_config
+from settings import env_config
 from string import Template
 import requests
+import http
+import json
 
 
 class GithubApi:
@@ -73,16 +72,13 @@ class GithubApi:
         if request.status_code == http.HTTPStatus.OK:
             try:
                 response_json = request.json()
+                if len(response_json['data']['search']['edges']) == 0:
+                    print('wtf')
             except json.JSONDecodeError:
                 response_json = {
                     'error': 'JSON Error',
-                    'info': request.text
+                    'data': request.text
                 }
-
-            #temp
-            if len(response_json['data']['search']['edges']) == 0:
-                print('wtf')
-            #temp
 
             return response_json
         else:

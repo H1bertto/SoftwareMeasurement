@@ -1,8 +1,0 @@
-from pathlib import Path
-from decouple import Config, RepositoryEnv
-
-
-BASE_DIR = Path(__file__).resolve().parent
-
-DOTENV_FILE = f'{BASE_DIR}/lab.env'
-env_config = Config(RepositoryEnv(DOTENV_FILE))

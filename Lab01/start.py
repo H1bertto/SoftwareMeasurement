@@ -1,9 +1,10 @@
 from Lab01.domain.generate_csv import read_repository_csv
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
 
-if __name__ == '__main__':
+
+def lab1_start():
     # generate_repository_csv()
     repositories = read_repository_csv()
 

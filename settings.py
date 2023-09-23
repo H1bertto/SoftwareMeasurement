@@ -1,5 +1,5 @@
-from pathlib import Path
 from decouple import Config, RepositoryEnv
+from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent

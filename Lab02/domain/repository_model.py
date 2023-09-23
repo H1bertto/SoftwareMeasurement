@@ -1,5 +1,5 @@
-from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from datetime import datetime
 
 
 class Repository:

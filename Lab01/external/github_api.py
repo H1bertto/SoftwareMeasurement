@@ -1,9 +1,8 @@
-import http
-import json
-
 from settings import env_config
 from string import Template
 import requests
+import http
+import json
 
 
 class GithubApi:
