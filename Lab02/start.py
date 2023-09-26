@@ -1,4 +1,8 @@
+import subprocess
+
 from Lab02.domain.generate_csv import generate_repository_csv, read_repository_csv
+from Lab02.domain.ck_csv_service import CkCsvService
+from Lab02.domain.ck_model import Ck
 from git import Repo
 import os
 
@@ -19,3 +23,20 @@ def lab2_start():
         f.close()
 
     print('ok')
+
+
+def temp():
+    service = CkCsvService()
+    service.start_writer()
+    service.write_header()
+
+    ck_analysis("airbnb/lottie-android", service)
+
+
+def ck_analysis(repo, service):
+    os.makedirs("./Lab02/ck-results/" + repo)
+    subprocess.run(
+        ["java", "-jar", "./Lab02/ck.jar", "./repos/" + repo, "true", "0", "False", "./Lab02/ck-results/" + repo + "/"])
+
+    metrics = service.sum_ck_class(repo)
+    service.write_row(Ck(metrics))
