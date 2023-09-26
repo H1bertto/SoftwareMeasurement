@@ -4,3 +4,4 @@ venv/
 __pycache__/
 repos/
 *.pdf
+*./last_line.txt
