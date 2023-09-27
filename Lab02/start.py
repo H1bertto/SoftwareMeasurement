@@ -27,15 +27,14 @@ def lab2_start():
         f.write(f'{repo.line}')
         f.flush()
         f.close()
+        run_ck_analysis(repo.name_with_owner)
         if (repo.line % step_to_pause_clone) == 0:
-            run_ck_analysis()
             remove_cloned_repos()
 
 
 def start_ck():
     service = CkCsvService()
     service.start_writer()
-    service.write_header()
     return service
 
 
@@ -48,18 +47,13 @@ def ck_analysis(repo, service):
     service.write_row(Ck(metrics))
 
 
-def run_ck_analysis():
+def run_ck_analysis(name):
     service = start_ck()
-    repos_path = f"{BASE_DIR}/Lab02/repos/"
-    if os.path.exists(repos_path):
-        for dir_name in os.listdir(repos_path):
-            ck_analysis(dir_name, service)
-    else:
-        raise Exception(f"Path not found: repos/")
+    ck_analysis(name, service)
 
 
 def remove_cloned_repos():
-    repos_path = f"{BASE_DIR}/Lab02/repos/"
+    repos_path = f"{BASE_DIR}/repos/"
     if os.path.exists(repos_path):
         for dir_name in os.listdir(repos_path):
             dir_path = os.path.join(repos_path, dir_name)

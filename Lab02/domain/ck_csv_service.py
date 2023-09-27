@@ -73,7 +73,11 @@ class CkCsvService:
             lcom_sum += row["lcom"]
             count += 1
 
-        return {"name": name, "cbo": cbo_sum/count, "dit": dit_sum/count, "lcom": lcom_sum/count}
+        if count > 0:
+            return {"name": name, "cbo": cbo_sum / count, "dit": dit_sum / count, "lcom": lcom_sum / count}
+        else:
+            return {"name": name, "cbo": 0, "dit": 0, "lcom": 0}
+
 
     def read_ck_method(self, repo):
         file = pd.read_csv(self.PATH + repo + "/method.csv", encoding='utf-8')
