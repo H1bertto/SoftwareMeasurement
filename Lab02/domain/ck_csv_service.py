@@ -59,24 +59,29 @@ class CkCsvService:
             metrics.append(Ck(ck_row=row))
         return metrics
 
-    def sum_ck_class(self, name):
-        file = pd.read_csv(self.PATH + name + "/class.csv", encoding='utf-8')
+    def sum_ck_class(self, path):
+        file = pd.read_csv(path + "/class.csv", encoding='utf-8')
 
         cbo_sum = 0
         dit_sum = 0
         lcom_sum = 0
+        loc_sum = 0
         count = 0
 
         for row in file.to_dict(orient='records'):
             cbo_sum += row["cbo"]
             dit_sum += row["dit"]
             lcom_sum += row["lcom"]
+            loc_sum += row["loc"]
             count += 1
 
+        name = path.replace(self.PATH, '')
+        name = name.replace("/class.csv", '')
+
         if count > 0:
-            return {"name": name, "cbo": cbo_sum / count, "dit": dit_sum / count, "lcom": lcom_sum / count}
+            return {"name": name, "cbo": cbo_sum / count, "dit": dit_sum / count, "lcom": lcom_sum / count, "loc": loc_sum}
         else:
-            return {"name": name, "cbo": 0, "dit": 0, "lcom": 0}
+            return {"name": name, "cbo": 0, "dit": 0, "lcom": 0, "loc": 0}
 
 
     def read_ck_method(self, repo):

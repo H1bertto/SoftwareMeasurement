@@ -8,7 +8,6 @@ from git import Repo
 import shutil
 import os
 
-
 REPOS_PATH = f"{BASE_DIR}/Lab02/repos/"
 
 
@@ -30,6 +29,25 @@ def lab2_start():
         run_ck_analysis(repo.name_with_owner)
         if (repo.line % step_to_pause_clone) == 0:
             remove_cloned_repos()
+
+
+def lab2_start_with_lcom():
+    counter = 1
+    base_path = f"{BASE_DIR}/Lab02/ck-results/"
+
+    for middle_name in os.listdir(base_path):
+        partial_name = os.path.join(base_path, middle_name)
+
+        if os.path.isdir(partial_name):
+            for end_name in os.listdir(partial_name):
+                full_name = os.path.join(partial_name, end_name)
+
+                if os.path.isdir(full_name):
+                    print("Doing " + str(counter) + "\n")
+                    service = start_ck()
+                    metrics = service.sum_ck_class(full_name)
+                    service.write_row(Ck(metrics))
+                    counter += 1
 
 
 def start_ck():

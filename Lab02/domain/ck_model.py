@@ -12,6 +12,7 @@ class Ck:
             self.cbo = metrics["cbo"]
             self.dit = metrics["dit"]
             self.lcom = metrics["lcom"]
+            self.loc = metrics["loc"]
 
         if ck_row is not None:
             self.name = ck_row[self.ROW_HEADER[0]]
@@ -25,4 +26,5 @@ class Ck:
             self.cbo,
             self.dit,
             self.lcom,
+            self.loc,
         ]

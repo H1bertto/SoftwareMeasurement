@@ -3,10 +3,10 @@ from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    df = pd.read_csv('../ck-results.csv')
+    df = pd.read_csv('../result.csv')
 
     print("********** max ********** \n")
-    print(df.iloc[df['created_at'].idxmax()])
+    print(df.iloc[df['stargazer_count'].idxmax()])
 
     print("\n\n********** min ********** \n")
     print(df.iloc[df['created_at'].idxmin()])
