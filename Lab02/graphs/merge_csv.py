@@ -10,13 +10,16 @@ if __name__ == '__main__':
 
     Cks = []
     for row in ck_file:
-        Cks.append({
-            "name": row["name"],
-            "cbo": row["cbo"],
-            "dit": row["dit"],
-            "lcom": row["lcom"],
-            "loc": row["loc"],
-        })
+        qi = (row["cbo"] + row["dit"] + row["lcom"]) / 3
+        if qi > 0:
+            Cks.append({
+                "name": row["name"],
+                "cbo": row["cbo"],
+                "dit": row["dit"],
+                "lcom": row["lcom"],
+                "loc": row["loc"],
+                "qi": qi
+            })
 
     for row in repository_file:
         repository = {
@@ -38,6 +41,6 @@ if __name__ == '__main__':
                     repository["created_at"],
                     repository["stargazer_count"],
                     repository["releases"],
-                    (ck["cbo"] + ck["dit"] + ck["lcom"]) / 3
+                    ck["qi"],
                 ])
                 result_file.flush()

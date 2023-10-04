@@ -9,20 +9,23 @@ if __name__ == '__main__':
     print(df.iloc[df['stargazer_count'].idxmax()])
 
     print("\n\n********** min ********** \n")
-    print(df.iloc[df['created_at'].idxmin()])
+    print(df.iloc[df['stargazer_count'].idxmin()])
 
     print("\n\n")
 
-    print("median: " + str(df['created_at'].median()))
-    print("mean: " + str(df['created_at'].mean()))
-    print("std: " + str(df['created_at'].std()))
-    print("p90: " + str(df['created_at'].quantile(q=0.9)))
+    print("median: " + str(df['stargazer_count'].median()))
+    print("mean: " + str(df['stargazer_count'].mean()))
+    print("std: " + str(df['stargazer_count'].std()))
+    print("p90: " + str(df['stargazer_count'].quantile(q=0.9)))
 
     print("\n\n")
 
-    correlation, p_value = pearsonr(df['created_at'], df['stargazer_count'])
-    print("correlation: " + str(correlation))
-    print("p-value: " + str(p_value))
+    df = df[df.stargazer_count < df.stargazer_count.quantile(.80)]
+    df = df[df.qi < df.qi.quantile(.80)]
 
-    df.plot(x='created_at', y='stargazer_count', kind='scatter')
+    # correlation, p_value = pearsonr(df['stargazer_count'], df['stargazer_count'])
+    # print("correlation: " + str(correlation))
+    # print("p-value: " + str(p_value))
+
+    df.plot(x='stargazer_count', y='qi', kind='scatter')
     plt.show()
