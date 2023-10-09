@@ -17,8 +17,6 @@ if __name__ == '__main__':
             lab2_start()
         elif x == '22':
             lab2_start_with_lcom()
-        elif x == '3':
-            lab3_start()
         elif x.lower() == 's':
             print('Até mais')
             break
